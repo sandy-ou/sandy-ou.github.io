@@ -52,6 +52,13 @@
                     this.ctx.lineTo(this.position.x, this.position.y);
                     this.ctx.stroke();
                 }
+                
+                //禁止滑动
+                e.preventDefault && e.preventDefault();
+                e.returnValue = false;
+                
+                e.stopPropagation && e.stopPropagation();    
+                return false;
             }
             end(e) {
                 this.drawing = 0;
