@@ -59,14 +59,14 @@
             init() {
                 if(this.el && typeof (this.el.addEventListener) === "function") {
                     //pc
-                    this.el.addEventListener("mousedown", this.start.bind(this), true);
-                    this.el.addEventListener("mousemove", this.move.bind(this), true);
-                    this.el.addEventListener("mouseup", this.end.bind(this), true);
+                    this.el.addEventListener("mousedown", this.start.bind(this));
+                    this.el.addEventListener("mousemove", this.move.bind(this));
+                    this.el.addEventListener("mouseup", this.end.bind(this));
 
                     //mobile
-                    this.el.addEventListener("touchstart", this.start.bind(this), true);
-                    this.el.addEventListener("touchmove", this.move.bind(this), true);
-                    this.el.addEventListener("touchend", this.end.bind(this), true);                    
+                    this.el.addEventListener("touchstart", this.start.bind(this));
+                    this.el.addEventListener("touchmove", this.move.bind(this));
+                    this.el.addEventListener("touchend", this.end.bind(this));                    
                 }
             }
         }
