@@ -11,50 +11,63 @@
         }
     </style>
 </head>
-
 <body>
-
-    <canvas id="myCanvas" width="400" height="200" style="border:1px solid #c3c3c3;" onmousedown="onMouseDown(event)"
-        onmouseup="onMouseUp(event)" onclick="onClick(event)" onmousemove="onMouseMove(event)">
+    <canvas id="myCanvas" width="400" height="200" style="border:1px solid #c3c3c3;">
         您的浏览器不支持 HTML5 canvas 标签。
     </canvas>
-
     <script>
-        var pos = {
-            x: 0,
-            y: 0
-        };
-        var drawing = 0;
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
-        ctx.strokeStyle = "#e30e1a";
-        let onMouseDown = function (e) {
-            drawing = 1;
-            if (e.pageX || e.pageY) {
-                pos.x = e.pageX;
-                pos.y = e.pageY;
+        class draw {
+            constructor(el, options={color: "#e30e1a"}) {
+                this.el = el;
+                this.ctx = el.getContext("2d");
+                this.ctx.strokeStyle = options.color;
+                this.position = {
+                    x:0,
+                    y:0
+                };
+                this.drawing = 0;
             }
-            ctx.moveTo(pos.x, pos.y);
-        }
-        let onMouseUp = function (e) {
-            drawing = 0;
-        }
-        let onMouseMove = function (e) {
-            if (pos.x != 0 && pos.y != 0 && drawing) {
-                let x = 0;
-                let y = 0;
+            start(e) {
+                this.drawing = 1;
                 if (e.pageX || e.pageY) {
-                    x = e.pageX;
-                    y = e.pageY;
+                    this.position = {
+                        x: e.pageX,
+                        y: e.pageY
+                    }
                 }
-                pos.x = x;
-                pos.y = y;
-                ctx.lineTo(pos.x, pos.y);
-                ctx.stroke();
+                this.ctx.moveTo(this.position.x, this.position.y);
+            }
+            move(e) {
+                let canMove = this.position.x != 0 && this.position.y != 0 && this.drawing;
+                if (canMove) {
+                    if (e.pageX || e.pageY) {
+                        this.position = {
+                            x: e.pageX,
+                            y: e.pageY
+                        }
+                    }
+                    this.ctx.lineTo(this.position.x, this.position.y);
+                    this.ctx.stroke();
+                }
+            }
+            end(e) {
+                this.drawing = 0;
+            }
+            init() {
+                if(this.el && typeof (this.el.addEventListener) === "function") {
+                    //pc
+                    this.el.addEventListener("mousedown", this.start.bind(this));
+                    this.el.addEventListener("mousemove", this.move.bind(this));
+                    this.el.addEventListener("mouseup", this.end.bind(this));
+
+                    //mobile
+                    this.el.addEventListener("touchstart", this.start.bind(this));
+                    this.el.addEventListener("touchmove", this.move.bind(this));
+                    this.el.addEventListener("touchend", this.end.bind(this));                    
+                }
             }
         }
+        new draw(document.getElementById("myCanvas")).init();
     </script>
-
 </body>
-
 </html>
