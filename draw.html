@@ -28,6 +28,7 @@
                 this.drawing = 0;
             }
             start(e) {
+                e = e.touches ?  e.touches[0] : e;
                 this.drawing = 1;
                 if (e.pageX || e.pageY) {
                     this.position = {
@@ -38,6 +39,7 @@
                 this.ctx.moveTo(this.position.x, this.position.y);
             }
             move(e) {
+                e = e.touches ?  e.touches[0] : e;
                 let canMove = this.position.x != 0 && this.position.y != 0 && this.drawing;
                 if (canMove) {
                     if (e.pageX || e.pageY) {
@@ -59,7 +61,7 @@
                     this.el.addEventListener("mousedown", this.start.bind(this));
                     this.el.addEventListener("mousemove", this.move.bind(this));
                     this.el.addEventListener("mouseup", this.end.bind(this));
-
+                    
                     //mobile
                     this.el.addEventListener("touchstart", this.start.bind(this));
                     this.el.addEventListener("touchmove", this.move.bind(this));
