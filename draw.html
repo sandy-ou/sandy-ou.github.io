@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>canvas 签名板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
     <style type="text/css">
         *, html {
             margin: 0;
@@ -58,14 +59,14 @@
             init() {
                 if(this.el && typeof (this.el.addEventListener) === "function") {
                     //pc
-                    this.el.addEventListener("mousedown", this.start.bind(this));
-                    this.el.addEventListener("mousemove", this.move.bind(this));
-                    this.el.addEventListener("mouseup", this.end.bind(this));
-                    
+                    this.el.addEventListener("mousedown", this.start.bind(this), true);
+                    this.el.addEventListener("mousemove", this.move.bind(this), true);
+                    this.el.addEventListener("mouseup", this.end.bind(this), true);
+
                     //mobile
-                    this.el.addEventListener("touchstart", this.start.bind(this));
-                    this.el.addEventListener("touchmove", this.move.bind(this));
-                    this.el.addEventListener("touchend", this.end.bind(this));                    
+                    this.el.addEventListener("touchstart", this.start.bind(this), true);
+                    this.el.addEventListener("touchmove", this.move.bind(this), true);
+                    this.el.addEventListener("touchend", this.end.bind(this), true);                    
                 }
             }
         }
