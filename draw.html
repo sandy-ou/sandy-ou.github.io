@@ -38,6 +38,7 @@
                     }
                 }
                 this.ctx.moveTo(this.position.x, this.position.y);
+                this.stopSlide(e);
             }
             move(e) {
                 e = e.touches ?  e.touches[0] : e;
@@ -52,16 +53,19 @@
                     this.ctx.lineTo(this.position.x, this.position.y);
                     this.ctx.stroke();
                 }
-                
+                this.stopSlide(e);
+            }
+            end(e) {
+                this.drawing = 0;
+                this.stopSlide(e);
+            }
+            stopSlide(e) {
                 //禁止滑动
                 e.preventDefault && e.preventDefault();
                 e.returnValue = false;
                 
                 e.stopPropagation && e.stopPropagation();    
                 return false;
-            }
-            end(e) {
-                this.drawing = 0;
             }
             init() {
                 if(this.el && typeof (this.el.addEventListener) === "function") {
