@@ -10,16 +10,24 @@
             margin: 0;
             padding:0;
         }
+        button {
+            width: 60px;
+            height: 30px;
+        }
     </style>
 </head>
 <body>
     <canvas id="myCanvas" width="373" height="200" style="border:1px solid #c3c3c3;">
         您的浏览器不支持 HTML5 canvas 标签。
     </canvas>
+    <div>
+        <button id="reset">重置</button>
+    </div>
     <script>
         class draw {
-            constructor(el, options={color: "#e30e1a"}) {
+            constructor(el, options) {
                 this.el = el;
+                this.resetbtn = options.resetbtn;
                 this.ctx = el.getContext("2d");
                 this.ctx.strokeStyle = options.color;
                 this.position = {
@@ -73,15 +81,24 @@
                     this.el.addEventListener("mousedown", this.start.bind(this));
                     this.el.addEventListener("mousemove", this.move.bind(this));
                     this.el.addEventListener("mouseup", this.end.bind(this));
+                    this.resetbtn.addEventListener("click", this.reset.bind(this));
 
                     //mobile
                     this.el.addEventListener("touchstart", this.start.bind(this));
                     this.el.addEventListener("touchmove", this.move.bind(this));
-                    this.el.addEventListener("touchend", this.end.bind(this));                    
+                    this.el.addEventListener("touchend", this.end.bind(this));     
+                                
                 }
             }
+            reset(e) {
+                this.ctx.clearRect(0, 0, this.el.width, this.el.height);
+                this.ctx.beginPath();
+            }
         }
-        new draw(document.getElementById("myCanvas")).init();
+        new draw(document.getElementById("myCanvas"), {
+            color: "#e30e1a",
+            resetbtn: document.getElementById("reset")
+        }).init();
     </script>
 </body>
 </html>
